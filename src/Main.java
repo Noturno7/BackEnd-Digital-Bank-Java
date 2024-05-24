@@ -1,29 +1,42 @@
 import BancoCliente.Cliente;
-import BancoContas.ContaCorrente;
-import BancoContas.ContaPoupanca;
-import BancoContas.Contas;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main (String[] args) {
-        Cliente Gabriel = new Cliente();
-        Gabriel.setNome("Gabriel");
-        Gabriel.setIdade(19);
+        Cliente Cliente1 = new Cliente();
 
-        Contas cc = new ContaCorrente(Gabriel);
-        Contas cp = new ContaPoupanca(Gabriel);
+        Scanner scanner = new Scanner(System.in);
+        
 
-        cc.imprimirExtrato();
-        System.out.println("\n");
-        cp.imprimirExtrato();
+            // Verificando se o usuário já é um cliente do banco.
 
-        cc.depositar(100);
-        cc.transferir(100, cp);
+            while (true) {
+                List<Cliente> listaClientes = new ArrayList<>();
 
-        cc.imprimirExtrato();
+
+                Cliente1.verificarECriarContas(scanner);
+                Cliente1.contaDesejada(scanner);
+                imprimirListaDeClientes(listaClientes);
+
+            }
+        }
+
+    public static void imprimirListaDeClientes(List<Cliente> listaClientes){
+        System.out.println("Lista de Clientes: ");
+        int contador = 0;
+        for(Cliente cliente:listaClientes){
+            contador = contador + 1;
+            System.out.println(cliente);
+        }
+        System.out.println("Número de clientes: "+ contador);
     }
+
 }
+
+
+
 
 
 

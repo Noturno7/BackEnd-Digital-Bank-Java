@@ -1,19 +1,23 @@
 package BancoOperacoes;
 
-import BancoCliente.Cliente;
+
 import BancoContas.Contas;
+import InterfaceConta.Conta;
 
 import java.util.List;
 
 public class Banco {
 
-    public void sacar(){
-    }
-    public void depositar(){
-    }
-    public void verificarSaldo(){
-    }
+    String nome;
     private List<Contas> contasList;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
     public List<Contas> getContasList() {
         return contasList;
