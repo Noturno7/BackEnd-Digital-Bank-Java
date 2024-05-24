@@ -2,43 +2,60 @@ package BancoCliente;
 
 import BancoContas.ContaCorrente;
 import BancoContas.ContaPoupanca;
-import BancoContas.Contas;
 
 import java.util.Scanner;
 
 public class Cliente {
-
-    Scanner scanner = new Scanner(System.in);
-    public String nome;
-    public int idade;
-
+    private Scanner scanner = new Scanner(System.in);
+    private String nome;
+    private int idade;
+    private double saldo;
+    private String agencia;
+    private int numeroConta;
 
     public String getNome() {
-        Cliente cliente = new Cliente();
-        return cliente.nom;
+        return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-
-
-    @Override
-    public String toString() {
-        return "nome: " + nome +
-                ", idade: " + idade ;
+    public double getSaldo() {
+        return saldo;
     }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    public String getAgencia() {
+        return agencia;
+    }
+
+    public void setAgencia(String agencia) {
+        this.agencia = agencia;
+    }
+
+    public int getNumeroConta() {
+        return numeroConta;
+    }
+
+    public void setNumeroConta(int numeroConta) {
+        this.numeroConta = numeroConta;
+    }
+
     public static Cliente verificarECriarContas(Scanner scanner) {
         String nomeCliente;
         double saldo;
-        double limiteChequeEspecial = 500;
         String validarUsuario, agencia;
         int numero;
 
         System.out.println("Você já é cliente dos nossos bancos? (s/n)");
         validarUsuario = scanner.next();
         scanner.nextLine(); // Consumir a linha restante
+
+        Cliente cliente2 = new Cliente();
 
         if (validarUsuario.equalsIgnoreCase("s")) {
             System.out.println("Por favor, digite o número da sua conta: ");
@@ -62,21 +79,19 @@ public class Cliente {
                 System.out.println("Número inválido!");
                 return null;
             }
+            cliente2.setAgencia(agencia);
+            cliente2.setNumeroConta(numero);
 
             System.out.println("Por favor, digite o seu nome: ");
             nomeCliente = scanner.nextLine();
-            Cliente cliente2 = new Cliente();
             cliente2.setNome(nomeCliente);
+
             System.out.println("Digite o seu saldo para verificação:");
             saldo = scanner.nextDouble();
+            cliente2.setSaldo(saldo);
             scanner.nextLine(); // Consumir a linha restante
 
             System.out.println("Conta verificada, seja bem-vindo(a) " + nomeCliente + ", sua agência é " + agencia + ", conta " + numero + " e seu saldo é de R$" + saldo + " já disponível para saque.");
-
-            Cliente cliente = new Cliente();
-            cliente.setNome(nomeCliente);
-            // Adicione outras informações ao cliente conforme necessário
-            return cliente;
 
         } else {
             System.out.println("Por favor, digite o número que você deseja para a sua conta:");
@@ -96,50 +111,47 @@ public class Cliente {
                 System.out.println("Número inválido!");
                 return null;
             }
+            cliente2.setAgencia(agencia);
+            cliente2.setNumeroConta(numero);
 
             System.out.println("Por favor, digite o seu nome: ");
             nomeCliente = scanner.nextLine();
-            Cliente cliente2 = new Cliente();
             cliente2.setNome(nomeCliente);
+
             System.out.println("Por favor, digite o seu saldo desejável: ");
             saldo = scanner.nextDouble();
+            cliente2.setSaldo(saldo);
             scanner.nextLine(); // Consumir a linha restante
 
             if (saldo > 800) {
                 System.out.println("Infelizmente não é possível liberar este saldo para novos clientes, o sistema irá definir o seu saldo como o saldo máximo para novos clientes. Para mais informações fale com um dos nossos atendentes.");
                 saldo = 800;
+                cliente2.setSaldo(saldo);
             }
 
-            // Imprimimos a mensagem final com os dados do cliente e a sua agência
             System.out.println("Olá " + nomeCliente + ", obrigado(a) por criar uma conta em nosso banco, sua agência é " + agencia + ", conta " + numero + " e seu saldo é de R$" + saldo + " já disponível para saque.");
-
-            Cliente cliente = new Cliente();
-            cliente.setNome(nomeCliente);
-            // Adicione outras informações ao cliente conforme necessário
-            return cliente;
         }
+
+        return cliente2;
     }
-    public static Cliente contaDesejada(Scanner scanner){
-        Scanner scanner1 = new Scanner(System.in);
+
+    public static void contaDesejada(Scanner scanner, Cliente cliente) {
         System.out.println("Qual é o seu tipo de conta? Para Conta Corrente(c). Para Conta Poupança(p): ");
         String tipoConta = scanner.next();
         scanner.nextLine();
-        Cliente cliente = new Cliente();
-        if (tipoConta.equalsIgnoreCase("c")){
-            Contas cc = new ContaCorrente(cliente);
-            //Execute as ações bancarias aqui.
+
+        if (tipoConta.equalsIgnoreCase("c")) {
+            ContaCorrente cc = new ContaCorrente(cliente);
+            // Execute as ações bancarias aqui.
+        } else {
+            ContaPoupanca cc = new ContaPoupanca(cliente);
+            // Execute as ações bancarias aqui.
         }
-        else {
-            Contas cc = new ContaPoupanca(cliente);
-            //Execute as ações bancarias aqui.
-        }
-        return cliente;
     }
-    public static Cliente verificadDados(){
-        Cliente cliente = new Cliente();
-            System.out.println("Titular: "+ cliente.nome);
-            System.out.println("Agência: "+ agencia);
-            System.out.println("Número da agência: "+ numeroConta);
-            System.out.println("Saldo: "+ saldo);
+    public static void verificarDados(Cliente cliente) {
+        System.out.println("Titular: " + cliente.getNome());
+        System.out.println("Agência: " + cliente.getAgencia());
+        System.out.println("Número da conta: " + cliente.getNumeroConta());
+        System.out.println("Saldo: " + cliente.getSaldo());
     }
 }

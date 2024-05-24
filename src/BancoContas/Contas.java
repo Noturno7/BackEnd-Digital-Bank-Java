@@ -19,28 +19,10 @@ public abstract class Contas  implements Conta {
 
     public Contas(Cliente cliente) {
         this.agencia = agencia;
-        this.numeroConta =  numeroConta++;
+        this.numeroConta =  numeroConta;
         this.cliente = cliente;
     }
-    @Override
-    public void sacar(double valor) {
-        saldo -= valor;
-        System.out.println("Saque no valor de R$"+ valor + " concluído com exito.");
 
-    }
-
-    @Override
-    public void depositar(double valor) {
-        saldo += valor;
-        System.out.println("Deposito no valor de R$"+ valor + " concluído com exito.");
-
-    }
-    @Override
-    public void transferir(double valor, Conta contaDestino) {
-        this.sacar(valor);
-        contaDestino.depositar(valor);
-        System.out.println("Transferência no valor de R$"+ valor + " concluída com exito.");
-    }
 
     public double getSaldo() {
         return saldo;
@@ -51,11 +33,6 @@ public abstract class Contas  implements Conta {
     }
 
     public void imprimirDados(){
-        Cliente cliente = new Cliente();
-        System.out.println("Titular: "+ cliente.getNome());
-        System.out.println("Agência: "+ agencia);
-        System.out.println("Número da agência: "+ numeroConta);
-        System.out.println("Saldo: "+ saldo);
+        verificarDados();
     }
-
 }
